@@ -1,0 +1,43 @@
+# fly.toml app configuration file generated for webframework on 2025-02-25T16:59:31-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'FLY_APP_NAME'
+primary_region = 'yyz'
+console_command = '/code/manage.py shell'
+
+[build]
+
+[deploy]
+# NOTE: Run database migrations manually after deploy if using volume storage, since release_command does not have access to fly.io storage volumes
+# Reference: https://community.fly.io/t/using-sqlite-from-persistent-volume-for-django-application/16206/3
+#  release_command = 'python manage.py migrate --noinput'
+
+[env]
+  PORT = '8000'
+
+[[mounts]]
+  source = 'myapp_data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[[statics]]
+  guest_path = '/code/static'
+  url_prefix = '/static/'
+
+[[statics]]
+  guest_path = '/data/uploads'
+  url_prefix = '/media/'

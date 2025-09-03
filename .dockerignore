@@ -1,0 +1,17 @@
+fly.toml
+.git/
+*.sqlite3
+venv
+.tmp/
+
+server/.env
+server/static
+server/uploads
+
+app/.env
+app/node_modules
+
+**/__pycache__
+**/*.sqlite3
+**/secret_key.txt
+**/.DS_Store
